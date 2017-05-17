@@ -1,0 +1,11 @@
+@font-face {
+	font-family: 'waltograph';
+	src: url(assets/waltograph/waltograph42.ttf);
+  	src: url('waltograph42.woff2') format('woff2'), /* Super Modern Browsers */
+        url('waltograph42.woff') format('woff'), /* Pretty Modern Browsers */
+        url('waltograph42.ttf')  format('truetype'), /* Safari, Android, iOS */
+}
+
+body {
+	font-family: 'waltograph', Times;
+}
