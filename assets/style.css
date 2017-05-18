@@ -1,11 +1,51 @@
 @font-face {
 	font-family: 'waltograph';
-	src: url(assets/waltograph/waltograph42.ttf);
-  	src: url('waltograph42.woff2') format('woff2'), /* Super Modern Browsers */
-        url('waltograph42.woff') format('woff'), /* Pretty Modern Browsers */
-        url('waltograph42.ttf')  format('truetype'), /* Safari, Android, iOS */
+	src: url(assets/waltograph/waltograph42.ttf) format(truetype);
 }
 
 body {
 	font-family: 'waltograph', Times;
+	background: blue;
 }
+
+.container {
+	position: relative;
+}
+
+.hangman {
+	position: absolute;
+	left: 29%;
+	top: 50px;
+	/*font-weight: ;*/
+	font-size: 150px;
+	color: lightgrey;
+}
+
+.word, .currentWord, .guesses, .guessRemain {
+	font-size: 36px;
+	text-align: center;
+	color: white;
+	margin: 16px 16px;
+}
+
+.disney {
+	width: 100%;
+	height: 400px;
+}
+
+.start {
+	/*font-family: 'waltograph';*/
+	color: white;
+	text-align: center;
+	font-size: 52px;
+	margin: 24px 24px;
+}
+
+.easybtn, .hardbtn {
+	margin: 0px auto;
+}
+
+
+
+
+

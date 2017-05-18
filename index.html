@@ -5,10 +5,99 @@
 		<title>Document</title>
 		<link rel="stylesheet" type="text/css" href="assets/reset.css">
 		<link rel="stylesheet" type="text/css" href="assets/style.css">
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	</head>
 
 	<body>
-		I am walt disney!
+		<div class="container">
+			<h1 class="hangman">H a n g m a n</h1>
+			<img src="assets/img/disney.jpg" alt="Walt Disney" class="disney">
+
+			<h1 class="start">Select Easy or Hard to start!</h1>
+
+			<div class="buttons">
+				<button class="easybtn">Easy</button>
+				<button class="hardbtn">Hard</button>
+			</div>
+
+			<div class="word">Current Word:
+				<div class="currentWord" id="currentWord"></div>
+			</div>
+
+			<div class="guesses"> Guess Remaining:
+				<div class="guessRemain" id="guessRemain"></div>
+			</div>
+
+			<div class="guesses"> Letters Already Guessed:
+				<div class="guessRemain" id="guessRemain"></div>
+			</div>
+
+		</div>
+
+		<script>
+			var easyArray = ['BELLE','SNOW WHITE', 'CINDERELLE', 'MICKEY MOUSE', 'DONALD DUCK', 'BUZZ LIGHTYEAR', 'PETER PAN', 'ELSA', 'NEMO', 'SIMBA', 'ARIEL'];
+			var hardArray = ['JAFAR', 'COGSWORTH', 'LEMIERE', 'MARLIN', 'KRISTOFF', 'BAGHEERA', 'NALA', 'KING TRITON', 'PLUTO', 'THE LOST BOYS', 'BASHFUL'];
+			var guessCount = 15;
+			var arrayOfGuess = ['a','b','c'];
+			
+			function getRandomIndex () {
+				var index = Math.floor(Math.random()*11);
+				console.log(index);
+				return index;
+			}
+
+			function printDashes(name) {
+				if(typeof(name) === 'string') {
+					var x = '_';
+					for (var i = 1; i < name.length; i++) {
+						x = x + ' _';
+					}
+					var targetDiv = document.getElementById("currentWord");
+					targetDiv.innerHTML= x;
+					return x;
+				}
+				else {
+					console.log("not a string");
+				}
+			}
+
+			function replaceDashWithLetter(word, letter) {
+				var x = '';
+				if (word[0] === letter) {
+					x = letter;
+				}
+				else {
+					x = '_';
+				}
+				for (var i = 1; i < word.length; i++) {
+					if(word[i] === letter) {
+						x = x + ' ' + letter;
+					}
+					else {
+						x = x + ' _';
+					}
+				}
+				return x;
+			}
+
+			function stringToArray(string) {
+				return string.split('');
+			}
+
+			function updateGuessRemaining (x) {
+				var targetDiv = document.getElementById("guessRemain");
+				targetDiv.innerHTML= x;
+			}
+
+			console.log(easyArray[getRandomIndex()]);
+			console.log(hardArray[getRandomIndex()]);
+			console.log(printDashes("Amanda"));
+			updateGuessRemaining(guessCount);
+			// console.log(replaceDashWithLetter('amanda','a'));
+			// console.log(stringToArray("amanda"));
+
+
+		</script>
 
 		
 	</body>
