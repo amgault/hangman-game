@@ -21,11 +21,15 @@ body {
 	color: lightgrey;
 }
 
-.word, .currentWord, .guesses, .guessRemain {
+.word, .currentWord, .guesses, .guessRemain, .lettersGuessed {
 	font-size: 36px;
 	text-align: center;
 	color: white;
 	margin: 16px 16px;
+}
+
+.currentWord, .lettersGuessed {
+	letter-spacing: 1em;
 }
 
 .disney {

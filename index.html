@@ -5,94 +5,254 @@
 		<title>Document</title>
 		<link rel="stylesheet" type="text/css" href="assets/reset.css">
 		<link rel="stylesheet" type="text/css" href="assets/style.css">
+		
+		<!-- JQuery -->
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	</head>
 
 	<body>
+
+		<!-- Main container for body -->
 		<div class="container">
+
+			<!-- Top picture and title -->
 			<h1 class="hangman">H a n g m a n</h1>
 			<img src="assets/img/disney.jpg" alt="Walt Disney" class="disney">
 
+			<!-- Select level buttons -->
 			<h1 class="start">Select Easy or Hard to start!</h1>
-
 			<div class="buttons">
 				<button class="easybtn">Easy</button>
 				<button class="hardbtn">Hard</button>
 			</div>
 
+			<!-- Word user sees when they are trying to guess -->
 			<div class="word">Current Word:
 				<div class="currentWord" id="currentWord"></div>
 			</div>
 
-			<div class="guesses"> Guess Remaining:
-				<div class="guessRemain" id="guessRemain"></div>
+			<!-- Displays the users number of remaining guesses -->
+			<div class="guesses"> Number of Guesses Remaining:
+				<div class="guessRemain" id="guessRemain">10</div>
 			</div>
 
+			<!-- Displays all the letters that the user has already guessed -->
 			<div class="guesses"> Letters Already Guessed:
-				<div class="guessRemain" id="guessRemain"></div>
+				<div class="lettersGuessed" id="lettersGuessed"></div>
 			</div>
 
 		</div>
 
 		<script>
-			var easyArray = ['BELLE','SNOW WHITE', 'CINDERELLE', 'MICKEY MOUSE', 'DONALD DUCK', 'BUZZ LIGHTYEAR', 'PETER PAN', 'ELSA', 'NEMO', 'SIMBA', 'ARIEL'];
-			var hardArray = ['JAFAR', 'COGSWORTH', 'LEMIERE', 'MARLIN', 'KRISTOFF', 'BAGHEERA', 'NALA', 'KING TRITON', 'PLUTO', 'THE LOST BOYS', 'BASHFUL'];
-			var guessCount = 15;
-			var arrayOfGuess = ['a','b','c'];
-			
-			function getRandomIndex () {
-				var index = Math.floor(Math.random()*11);
-				console.log(index);
-				return index;
-			}
 
-			function printDashes(name) {
-				if(typeof(name) === 'string') {
-					var x = '_';
-					for (var i = 1; i < name.length; i++) {
-						x = x + ' _';
+			// Makes sure everything loads before the game begins
+			$(document).ready(function (){
+
+				// Possible Words Given
+				var easyArray = ['BELLE','SNOW WHITE', 'CINDERELLE', 'MICKEY MOUSE', 'DONALD DUCK', 'BUZZ LIGHTYEAR', 'PETER PAN', 'ELSA', 'NEMO', 'SIMBA', 'ARIEL'];
+				var hardArray = ['JAFAR', 'COGSWORTH', 'LEMIERE', 'MARLIN', 'KRISTOFF', 'BAGHEERA', 'NALA', 'KING TRITON', 'PLUTO', 'THE LOST BOYS', 'BASHFUL'];
+
+				// Array to contain the word to be guessed
+				var fullWordArray = [];
+				// Array to hold blanks and letters as they are guessed
+				var currentWordArray = [];
+				// Array of all the letters that have been guessed for this word
+				var lettersGuessedArray = [];
+				// Counter for remaining guesses
+				var guessCount = 10;
+				// Alphabet array
+				var alphaArray = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+				
+				// This function returns a word to guess in an array where each character is in it's own index. To do this it takes that array it is passed, grabs a random indexed string, and splits the string into an array by .split('').
+				function getRandomWordArray(array) {
+					var index = Math.floor(Math.random()*11);
+					var wordArray = array[index].split('');
+					console.log(index);
+					return wordArray;
+				}
+
+				// Initialize the word that is being guessed for user to see (using dashes and spaces). Note- use letter-spacing in CSS to add space between letters, instead of spaces
+				function initializeCurrentWordArray(wordArr) {
+					var newArr = [];
+					for(var i=0; i<wordArr.length; i++) {
+						if (wordArr[i] === ' ') {
+							newArr.push(' ');
+						}
+						else {
+							newArr.push('_');
+						}		
+					}
+					console.log(newArr);
+					return newArr;
+				}
+
+				// This function gets the div that holds the word the user sees and updates it with any new correct guesses
+				function printWord(guessArr) {
+					// body...
+					var x = '';
+					for (var i = 0; i < guessArr.length; i++) {
+						x = x + guessArr[i];
 					}
 					var targetDiv = document.getElementById("currentWord");
-					targetDiv.innerHTML= x;
-					return x;
+			 		targetDiv.innerHTML= x;
 				}
-				else {
-					console.log("not a string");
-				}
-			}
 
-			function replaceDashWithLetter(word, letter) {
-				var x = '';
-				if (word[0] === letter) {
-					x = letter;
-				}
-				else {
-					x = '_';
-				}
-				for (var i = 1; i < word.length; i++) {
-					if(word[i] === letter) {
-						x = x + ' ' + letter;
+				// This function adds key pressed to lettersGuessedArray
+				function addLetterGuessed(char, letterArr) {
+					if((letterArr.indexOf(char) < 0) && (alphaArray.indexOf(char) >= 0)) {
+						letterArr.push(char);
 					}
-					else {
-						x = x + ' _';
+					return letterArr;
+				}
+
+				// This functions prints the letters guessed to the div so that the user can see them
+				function printLettersGuessed(letterArr) {
+					// body...
+					var x = '';
+					for (var i = 0; i < letterArr.length; i++) {
+						x = x + letterArr[i];
+					}
+					console.log(x);
+					var targetDiv = document.getElementById("lettersGuessed");
+			 		targetDiv.innerHTML= x;
+				}
+
+				// Updates current word array (what the user sees) with when a new letter is pressed and added the the letters guessed array.
+				function updateCurrentWord(guessArr, wordArr, letterArr) {
+					for (var i = 0; i < letterArr.length; i++) {
+						// console.log(letterArr[i]);
+						for (var j = 0; j < wordArr.length; j++) {
+							// 
+							if(letterArr[i] === wordArr[j]) {
+								guessArr[j] = wordArr[j];
+							}
+						}
+					}
+					// console.log(guessArr);
+					return guessArr;
+				}
+
+				// Updates the number of remaining guesses when an incorrect letter is given. Does nothing with a non-aplha key is pressed.
+				function updateGuessCounter(counter, char, wordArr, letterArr) {
+					var n = wordArr.indexOf(char);
+					var m = letterArr.indexOf(char);
+					// console.log(alphaArray.indexOf(char));
+					if ((alphaArray.indexOf(char) >= 0)&&(0 > n)&&(0 > m)) {
+						counter--;
+					}
+					// console.log(counter);
+					return counter;
+				}
+
+				// This function prints the number of remaining guesses to the screen for the user to see.
+				function printGuessesRemaining(counter) {
+					var targetDiv = document.getElementById("guessRemain");
+			 	 	targetDiv.innerHTML = counter;
+			 	 	// console.log(counter);
+				}
+
+				// This function checks to see if the use has won by checking if the guess array is equal to the array containing the original word.
+				function checkForWin(guessArr, wordArr) {
+					var win = true;
+					for (var i = 0; i < wordArr.length; i++) {
+						if (guessArr[i] !== wordArr[i]) {
+							win = false;
+						}
+					}
+					if(win === true) {
+						alert("YAY, YOU WIN!!!!");
+						location.reload();
 					}
 				}
-				return x;
-			}
 
-			function stringToArray(string) {
-				return string.split('');
-			}
+				// This function checks to see if the use has lost by checking if the guess count is at 0.
+				function checkForLose(counter) {
+					if(counter === 0) {
+						alert("Sorry, you lose!");
+						location.reload();
+					}
+				}
 
-			function updateGuessRemaining (x) {
-				var targetDiv = document.getElementById("guessRemain");
-				targetDiv.innerHTML= x;
-			}
 
-			console.log(easyArray[getRandomIndex()]);
-			console.log(hardArray[getRandomIndex()]);
-			console.log(printDashes("Amanda"));
-			updateGuessRemaining(guessCount);
+				fullWordArray =  getRandomWordArray(easyArray);
+				currentWordArray = initializeCurrentWordArray(fullWordArray);
+				printWord(currentWordArray);
+
+
+				// Our keyup function will run every time a key is released
+				$(document).keyup(function(e) {
+					var char = e.key.toUpperCase();
+					// console.log(guessCount);
+					// console.log(char);
+					guessCount = updateGuessCounter(guessCount, char, fullWordArray, lettersGuessedArray);
+					printGuessesRemaining(guessCount);
+					lettersGuessedArray = addLetterGuessed(char, lettersGuessedArray);
+					printLettersGuessed(lettersGuessedArray);
+					console.log(guessCount);
+					// console.log(lettersGuessedArray);
+					currentWordArray = updateCurrentWord(currentWordArray, fullWordArray, lettersGuessedArray);
+					printWord(currentWordArray);
+					console.log(currentWordArray);
+					checkForWin(currentWordArray, fullWordArray);
+					checkForLose(guessCount);
+
+				});
+
+
+			});
+
+			// function printDashes(name) {
+			// 	if(typeof(name) === 'string') {
+			// 		var x = '_';
+			// 		for (var i = 1; i < name.length; i++) {
+			// 			if
+			// 			x = x + ' _';
+			// 		}
+			// 		var targetDiv = document.getElementById("currentWord");
+			// 		targetDiv.innerHTML= x;
+			// 		return x;
+			// 	}
+			// 	else {
+			// 		console.log("not a string");
+			// 	}
+			// }
+
+			// function replaceDashWithLetter(word, letter) {
+			// 	var x = '';
+			// 	if (word[0] === letter) {
+			// 		x = letter;
+			// 	}
+			// 	else {
+			// 		x = '_';
+			// 	}
+			// 	for (var i = 1; i < word.length; i++) {
+			// 		if(word[i] === letter) {
+			// 			x = x + ' ' + letter;
+			// 		}
+			// 		else {
+			// 			x = x + ' _';
+			// 		}
+			// 	}
+			// 	return x;
+			// }
+
+			// function stringToArray(string) {
+			// 	return string.split('');
+			// }
+
+			// function updateGuessRemaining (x) {
+			// 	var targetDiv = document.getElementById("guessRemain");
+			// 	targetDiv.innerHTML= x;
+			// }
+
+			// function printLettersGuessed (array) {
+			// 	var target
+			// }
+
+			// console.log(easyArray[getRandomIndex()]);
+			// console.log(hardArray[getRandomIndex()]);
+			// console.log(printDashes("Amanda"));
+			// updateGuessRemaining(guessCount);
 			// console.log(replaceDashWithLetter('amanda','a'));
 			// console.log(stringToArray("amanda"));
 
