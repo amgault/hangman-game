@@ -5,7 +5,7 @@
 
 body {
 	font-family: 'waltograph', Times;
-	background: blue;
+	background: #193d98;
 }
 
 .container {
@@ -18,14 +18,18 @@ body {
 	top: 50px;
 	/*font-weight: ;*/
 	font-size: 150px;
-	color: lightgrey;
+	color: #BCC6CC;
 }
 
-.word, .currentWord, .guesses, .guessRemain, .lettersGuessed {
+.word, .currentWord, .guesses, .guessRemain, .lettersGuessed, .wins, .userwins {
 	font-size: 36px;
 	text-align: center;
 	color: white;
 	margin: 16px 16px;
+}
+
+.lettersGuessed {
+	height: 40px;
 }
 
 .currentWord, .lettersGuessed {
