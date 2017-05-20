@@ -26,24 +26,28 @@
 				<button class="hardbtn">Hard</button>
 			</div> -->
 
-			<!-- Word user sees when they are trying to guess -->
-			<div class="word">Current Word:
-				<div class="currentWord" id="currentWord"></div>
+			<div class="lefthalf">
+				<!-- Word user sees when they are trying to guess -->
+				<div class="word">Current Word:
+					<div class="currentWord" id="currentWord"></div>
+				</div>
+
+				<!-- Displays the users number of remaining guesses -->
+				<div class="guesses"> Incorrect Guesses Remaining:
+					<div class="guessRemain" id="guessRemain">7</div>
+				</div>
 			</div>
 
-			<!-- Displays the users number of remaining guesses -->
-			<div class="guesses"> Incorrect Guesses Remaining:
-				<div class="guessRemain" id="guessRemain">5</div>
-			</div>
+			<div class="righthalf">
+				<!-- Displays all the letters that the user has already guessed -->
+				<div class="guesses"> Letters Already Guessed:
+					<div class="lettersGuessed" id="lettersGuessed"></div>
+				</div>
 
-			<!-- Displays all the letters that the user has already guessed -->
-			<div class="guesses"> Letters Already Guessed:
-				<div class="lettersGuessed" id="lettersGuessed"></div>
-			</div>
-
-			<!-- Displays number of wins -->
-			<div class="wins"> Wins:
-				<div class="userwins" id="userwins"></div>
+				<!-- Displays number of wins -->
+				<div class="wins"> Wins:
+					<div class="userwins" id="userwins"></div>
+				</div>
 			</div>
 
 		</div>
@@ -65,7 +69,7 @@
 				// Array of all the letters that have been guessed for this word
 				var lettersGuessedArray = [];
 				// Counter for remaining guesses
-				var guessCount = 5;
+				var guessCount = 7;
 				// Counter for wins
 				var wins = 0;
 				// Alphabet array

@@ -12,6 +12,18 @@ body {
 	position: relative;
 }
 
+.lefthalf {
+	margin-left: 10%;
+	width: 40%;
+	float: left;
+}
+
+.righthalf {
+	margin-right: 10%;
+	width: 40%;
+	float: right;
+}
+
 .hangman {
 	position: absolute;
 	left: 29%;
