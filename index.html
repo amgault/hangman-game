@@ -103,55 +103,54 @@
 				}
 
 				// Initialize the word that is being guessed for user to see (using dashes and spaces). Note- use letter-spacing in CSS to add space between letters, instead of spaces
-				function initializeCurrentWordArray(wordArr) {
-					var newArr = [];
-					for(var i=0; i<wordArr.length; i++) {
-						if (wordArr[i] === ' ') {
-							newArr.push(' ');
+				function initializeCurrentWordArray(array) {
+					var initialArr = [];
+					for(var i=0; i<array.length; i++) {
+						if (array[i] === ' ') {
+							initialArr.push(' ');
 						}
 						else {
-							newArr.push('_');
+							initialArr.push('_');
 						}		
 					}
-					return newArr;
+					return initialArr;
 				}
 
 				// This function gets the div that holds the word the user sees and updates it with any new correct guesses
-				function printWord(guessArr) {
-					// body...
+				function printWord(array) {
 					var x = '';
-					for (var i = 0; i < guessArr.length; i++) {
-						x = x + guessArr[i];
+					for (var i = 0; i < array.length; i++) {
+						x = x + array[i];
 					}
 					var targetDiv = document.getElementById("currentWord");
 			 		targetDiv.innerHTML= x;
 				}
 
 				// This function adds key pressed to lettersGuessedArray
-				function addLetterGuessed(char, letterArr) {
-					if((letterArr.indexOf(char) < 0) && (alphaArray.indexOf(char) >= 0)) {
-						letterArr.push(char);
+				function addLetterGuessed(char, array) {
+					if((array.indexOf(char) < 0) && (alphaArray.indexOf(char) >= 0)) {
+						array.push(char);
 					}
-					return letterArr;
+					return array;
 				}
 
 				// This functions prints the letters guessed to the div so that the user can see them
-				function printLettersGuessed(letterArr) {
+				function printLettersGuessed(array) {
 					// body...
 					var x = '';
-					for (var i = 0; i < letterArr.length; i++) {
-						x = x + letterArr[i];
+					for (var i = 0; i < array.length; i++) {
+						x = x + array[i];
 					}
 					var targetDiv = document.getElementById("lettersGuessed");
 			 		targetDiv.innerHTML= x;
 				}
 
 				// Updates current word array (what the user sees) with when a new letter is pressed and added the the letters guessed array.
-				function updateCurrentWord(guessArr, wordArr, letterArr) {
-					for (var i = 0; i < letterArr.length; i++) {
+				function updateCurrentWord(guessArr, wordArr, lettersArr) {
+					for (var i = 0; i < lettersArr.length; i++) {
 						for (var j = 0; j < wordArr.length; j++) {
 							// 
-							if(letterArr[i] === wordArr[j]) {
+							if(lettersArr[i] === wordArr[j]) {
 								guessArr[j] = wordArr[j];
 							}
 						}
@@ -160,9 +159,9 @@
 				}
 
 				// Updates the number of remaining guesses when an incorrect letter is given. Does nothing with a non-aplha key is pressed.
-				function updateGuessCounter(counter, char, wordArr, letterArr) {
+				function updateGuessCounter(counter, char, wordArr, lettersArr) {
 					var n = wordArr.indexOf(char);
-					var m = letterArr.indexOf(char);
+					var m = lettersArr.indexOf(char);
 					if ((alphaArray.indexOf(char) >= 0)&&(0 > n)&&(0 > m)) {
 						counter--;
 					}
@@ -218,6 +217,7 @@
 					printWord(currentWordArray);
 				}
 
+				// This function updates the text in the first div to give the user instructions.
 				function updateInstructions() {
 					var targetDiv = document.getElementById("start");
 			 	 	targetDiv.innerHTML = "You Got This!";
