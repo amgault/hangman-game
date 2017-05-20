@@ -70,8 +70,6 @@
 				var wins = 0;
 				// Alphabet array
 				var alphaArray = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
-				
-				
 
 
 				fullWordArray =  getRandomWordArray(easyArray);
@@ -87,11 +85,8 @@
 					printGuessesRemaining(guessCount);
 					lettersGuessedArray = addLetterGuessed(char, lettersGuessedArray);
 					printLettersGuessed(lettersGuessedArray);
-					console.log(guessCount);
-					// console.log(lettersGuessedArray);
 					currentWordArray = updateCurrentWord(currentWordArray, fullWordArray, lettersGuessedArray);
 					printWord(currentWordArray);
-					console.log(currentWordArray);
 					wins = checkForWin(currentWordArray, fullWordArray, wins);
 					printWins(wins);
 					checkForLose(guessCount);
@@ -118,7 +113,6 @@
 							newArr.push('_');
 						}		
 					}
-					console.log(newArr);
 					return newArr;
 				}
 
@@ -148,7 +142,6 @@
 					for (var i = 0; i < letterArr.length; i++) {
 						x = x + letterArr[i];
 					}
-					console.log(x);
 					var targetDiv = document.getElementById("lettersGuessed");
 			 		targetDiv.innerHTML= x;
 				}
@@ -156,7 +149,6 @@
 				// Updates current word array (what the user sees) with when a new letter is pressed and added the the letters guessed array.
 				function updateCurrentWord(guessArr, wordArr, letterArr) {
 					for (var i = 0; i < letterArr.length; i++) {
-						// console.log(letterArr[i]);
 						for (var j = 0; j < wordArr.length; j++) {
 							// 
 							if(letterArr[i] === wordArr[j]) {
@@ -164,7 +156,6 @@
 							}
 						}
 					}
-					// console.log(guessArr);
 					return guessArr;
 				}
 
@@ -172,11 +163,9 @@
 				function updateGuessCounter(counter, char, wordArr, letterArr) {
 					var n = wordArr.indexOf(char);
 					var m = letterArr.indexOf(char);
-					// console.log(alphaArray.indexOf(char));
 					if ((alphaArray.indexOf(char) >= 0)&&(0 > n)&&(0 > m)) {
 						counter--;
 					}
-					// console.log(counter);
 					return counter;
 				}
 
@@ -184,7 +173,6 @@
 				function printGuessesRemaining(counter) {
 					var targetDiv = document.getElementById("guessRemain");
 			 	 	targetDiv.innerHTML = counter;
-			 	 	// console.log(counter);
 				}
 
 				// This function checks to see if the use has won by checking if the guess array is equal to the array containing the original word.
